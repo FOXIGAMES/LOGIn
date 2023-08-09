@@ -1,0 +1,22 @@
+asgiref==3.7.2
+Django==4.2.3
+djangorestframework
+djangorestframework-simplejwt==5.2.2
+mutagen==1.46.0
+Pillow==10.0.0
+psycopg2-binary==2.9.6
+PyJWT==2.8.0
+pytz==2023.3
+rest-framework-simplejwt==0.0.2
+sqlparse==0.4.4
+typing_extensions==4.7.1
+python_version < 3.10
+django-cors-headers
+celery
+python-dotenv
+drf_api_logger
+django-redis
+drf_yasg
+django_celery_beat
+django_celery_results
+django-debug-toolbar

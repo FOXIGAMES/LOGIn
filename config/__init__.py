@@ -1,0 +1,1 @@
+from myzloo.tasks import send_daily_notification

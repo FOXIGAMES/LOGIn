@@ -1,0 +1,136 @@
+hamza@hamza-Lenovo-IdeaPad-Y470:~$ redis-server
+Command 'redis-server' not found, but can be installed with:
+sudo apt install redis-server
+hamza@hamza-Lenovo-IdeaPad-Y470:~$ sudo install redis
+[sudo] password for hamza:
+install: missing destination file operand after 'redis'
+Try 'install --help' for more information.
+hamza@hamza-Lenovo-IdeaPad-Y470:~$ sudo apt install redis
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  chromium-codecs-ffmpeg-extra gstreamer1.0-vaapi libass9 libblas3 libbs2b0
+  libflashrom1 libflite1 libftdi1-2 libgstreamer-plugins-bad1.0-0 liblilv-0-0
+  libllvm13 libmysofa1 libnvidia-cfg1-390 libnvidia-common-390
+  libnvidia-decode-390 libnvidia-encode-390 libnvidia-fbc1-390
+  libnvidia-gl-390 libnvidia-ifr1-390 libpostproc55 librubberband2 libserd-0-0
+  libsord-0-0 libsratom-0-0 libva-wayland2 libvidstab1.1 libxnvctrl0 libzimg2
+  nvidia-compute-utils-390 nvidia-kernel-source-390 nvidia-settings
+  nvidia-utils-390 pkg-config pocketsphinx-en-us screen-resolution-extra
+  xserver-xorg-video-nvidia-390
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  libjemalloc2 liblua5.1-0 liblzf1 lua-bitop lua-cjson redis-server
+  redis-tools
+Suggested packages:
+  ruby-redis
+The following NEW packages will be installed:
+  libjemalloc2 liblua5.1-0 liblzf1 lua-bitop lua-cjson redis redis-server
+  redis-tools
+0 upgraded, 8 newly installed, 0 to remove and 108 not upgraded.
+Need to get 1 276 kB of archives.
+After this operation, 5 793 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 libjemalloc2 amd64 5.2.1-4ubuntu1 [240 kB]
+Get:2 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 liblua5.1-0 amd64 5.1.5-8.1build4 [99,9 kB]
+Get:3 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 liblzf1 amd64 3.6-3 [7 444 B]
+Get:4 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 lua-bitop amd64 1.0.2-5 [6 680 B]
+Get:5 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 lua-cjson amd64 2.1.0+dfsg-2.1 [17,4 kB]
+Get:6 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 redis-tools amd64 5:6.0.16-1ubuntu1 [856 kB]
+Get:7 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 redis-server amd64 5:6.0.16-1ubuntu1 [45,9 kB]
+Get:8 http://kg.archive.ubuntu.com/ubuntu jammy/universe amd64 redis all 5:6.0.16-1ubuntu1 [2 930 B]
+Fetched 1 276 kB in 2s (587 kB/s)
+Selecting previously unselected package libjemalloc2:amd64.
+(Reading database ... 246840 files and directories currently installed.)
+Preparing to unpack .../0-libjemalloc2_5.2.1-4ubuntu1_amd64.deb ...
+Unpacking libjemalloc2:amd64 (5.2.1-4ubuntu1) ...
+Selecting previously unselected package liblua5.1-0:amd64.
+Preparing to unpack .../1-liblua5.1-0_5.1.5-8.1build4_amd64.deb ...
+Unpacking liblua5.1-0:amd64 (5.1.5-8.1build4) ...
+Selecting previously unselected package liblzf1:amd64.
+Preparing to unpack .../2-liblzf1_3.6-3_amd64.deb ...
+Unpacking liblzf1:amd64 (3.6-3) ...
+Selecting previously unselected package lua-bitop:amd64.
+Preparing to unpack .../3-lua-bitop_1.0.2-5_amd64.deb ...
+Unpacking lua-bitop:amd64 (1.0.2-5) ...
+Selecting previously unselected package lua-cjson:amd64.
+Preparing to unpack .../4-lua-cjson_2.1.0+dfsg-2.1_amd64.deb ...
+Unpacking lua-cjson:amd64 (2.1.0+dfsg-2.1) ...
+Selecting previously unselected package redis-tools.
+Preparing to unpack .../5-redis-tools_5%3a6.0.16-1ubuntu1_amd64.deb ...
+Unpacking redis-tools (5:6.0.16-1ubuntu1) ...
+Selecting previously unselected package redis-server.
+Preparing to unpack .../6-redis-server_5%3a6.0.16-1ubuntu1_amd64.deb ...
+Unpacking redis-server (5:6.0.16-1ubuntu1) ...
+Selecting previously unselected package redis.
+Preparing to unpack .../7-redis_5%3a6.0.16-1ubuntu1_all.deb ...
+Unpacking redis (5:6.0.16-1ubuntu1) ...
+Setting up libjemalloc2:amd64 (5.2.1-4ubuntu1) ...
+Setting up lua-cjson:amd64 (2.1.0+dfsg-2.1) ...
+Setting up liblzf1:amd64 (3.6-3) ...
+Setting up lua-bitop:amd64 (1.0.2-5) ...
+Setting up liblua5.1-0:amd64 (5.1.5-8.1build4) ...
+Setting up redis-tools (5:6.0.16-1ubuntu1) ...
+Setting up redis-server (5:6.0.16-1ubuntu1) ...
+Created symlink /etc/systemd/system/redis.service → /lib/systemd/system/redis-se
+rver.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/redis-server.service
+ → /lib/systemd/system/redis-server.service.
+Setting up redis (5:6.0.16-1ubuntu1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.1) ...
+hamza@hamza-Lenovo-IdeaPad-Y470:~$ redis-server
+15948:C 28 Jul 2023 14:16:33.947 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15948:C 28 Jul 2023 14:16:33.947 # Redis version=6.0.16, bits=64, commit=00000000, modified=0, pid=15948, just started
+15948:C 28 Jul 2023 14:16:33.947 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+15948:M 28 Jul 2023 14:16:33.947 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+15948:M 28 Jul 2023 14:16:33.948 # Could not create server TCP listening socket *:6379: bind: Address already in use
+hamza@hamza-Lenovo-IdeaPad-Y470:~$ redis-cli
+127.0.0.1:6379> ping
+PONG
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+(empty array)
+127.0.0.1:6379> keys *
+1) ":1:views.decorators.cache.cache_page..GET.ae919d69ce618ea18d7d8e8b3033117f.65330eb47d0175f264fdb29633829c0b.en-us.UTC"
+2) ":1:views.decorators.cache.cache_header..ae919d69ce618ea18d7d8e8b3033117f.en-us.UTC"
+127.0.0.1:6379>
+
+
+
+
+   A     Пагинация (2,5)
+   A    Поиск, Фильтрация (2,5)
+
+
+- [Д]  Комментарии / Рейтинг (2,5)
+- [Д]  Лайки (2,5)
+- [Д]Рекомендации (схожие товары) (2,5)
+
+
+- [Х]  Подключить Celery для отправки оповещений (10)
+- [Х]  Logging (Кэширование) (2,5)
+- [Х]  Восстановление пароля (2,5)
+- [Х]  CORS настройки (2,5)
+- [Х]  Deploy (Google cloud/Heroku/etc.) (15)
+- [Х]Deploy celery (5)
+
+
+
+- [ ]  Deploy бота (5)
+- [ ]  Telegram Bot (5)
+- [ ]  Parsing (5)
