@@ -21,3 +21,4 @@ django_celery_beat
 django_celery_results
 django-debug-toolbar
 gunicorn
+django-cors-headers==3.7.0
