@@ -1,3 +1,6 @@
+from django.db.models import Avg
+
+from impressions.serializers import CommentListSerializer, LikedUserSerializer
 from .models import MusicTrack, myzloo_favorites
 from .models import CustomUser
 from rest_framework import serializers
@@ -63,7 +66,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined', 'favorites')
 
     def get_favorites(self, obj):
-        return list(obj.favorite_tracks.values_list('track_id', flat=True))
+        return list(obj.favorites_tracks.values_list('track', flat=True))
 
 class FavoritesSerializer(serializers.ModelSerializer):
     user = CustomUserSerializer()
@@ -92,3 +95,43 @@ class RegisterPhoneSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Пароль должен содержать буквы и цифры.')
 
         return attrs
+
+
+
+
+class TrackDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MusicTrack
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super(TrackDetailSerializer, self).to_representation(instance)
+        data['rating'] = instance.ratings.aggregate(
+            Avg('rating')
+        )
+        data['like_count'] = instance.likes.count()
+        data['likes'] = LikedUserSerializer(instance.likes.all(), many=True, required=False).data
+        # data['favorite_count'] = instance.favorites.count()
+        # data['favorites'] = FavoriteSerializer(instance.favorites.all(), many=True, required=False).data
+        data['comments_count'] = instance.comments.count()
+        data['comments'] = CommentListSerializer(instance.comments.all(), many=True, required=False).data
+
+        user = self.context['request'].user
+        if user.is_authenticated:
+            data['is_liked'] = self.is_liked(instance, user)
+            data['is_favorite'] = self.is_favorite(instance, user)
+        return data
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        track = MusicTrack.objects.create(author=request.user, **validated_data)
+        return track
+
+    @staticmethod
+    def is_liked(track, user):
+        return user.likes.filter(track=track).exists()
+
+class CustomUserSearchByFirstNameSerializer(serializers.Serializer):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'avatar')

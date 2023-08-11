@@ -13,6 +13,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'debug_toolbar',
+    'impressions'
 ]
 
 MIDDLEWARE = [
@@ -62,7 +64,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

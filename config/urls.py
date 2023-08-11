@@ -20,6 +20,8 @@ from django.contrib import admin
 from django.urls import include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
+from myzloo.urls import urlpatterns as myzloo_urls
+
 from myzloo.views import MusicTrackListCreateView, MusicTrackDetailView, CustomUserViewSet, AddRemoveFavoriteView, RegistrationView, ActivationView, LoginView, LogoutView
 from django.urls import path
 from rest_framework import permissions
@@ -56,6 +58,8 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('refresh/', TokenRefreshView.as_view()),
+    path('', include('impressions.urls')),
+    path('api/', include(myzloo_urls)),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
