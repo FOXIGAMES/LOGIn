@@ -15,7 +15,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'password', 'password_confirmation', 'username', 'first_name', 'last_name', 'avatar', 'is_staff')
+        fields = ('email', 'password', 'password_confirmation', 'username', 'avatar', 'is_staff')
 
     def validate(self, attrs):
         password = attrs['password']
@@ -58,12 +58,13 @@ class MusicTrackSerializer(serializers.ModelSerializer):
         model = MusicTrack
         fields = '__all__'
 
+
 class CustomUserSerializer(serializers.ModelSerializer):
     favorites = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined', 'favorites')
+        fields = ('id', 'email', 'is_active', 'is_staff', 'date_joined', 'favorites')
 
     def get_favorites(self, obj):
         return list(obj.favorites_tracks.values_list('track', flat=True))
@@ -83,7 +84,7 @@ class RegisterPhoneSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'password_confirmation', 'username', 'first_name', 'last_name', 'avatar')
+        fields = ('email', 'password', 'password_confirmation', 'username', 'avatar')
 
     def validate(self, attrs):
         password = attrs['password']
@@ -134,4 +135,4 @@ class TrackDetailSerializer(serializers.ModelSerializer):
 class CustomUserSearchByFirstNameSerializer(serializers.Serializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'avatar')
+        fields = ('avatar')

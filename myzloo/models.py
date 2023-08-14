@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.crypto import get_random_string
+from django.core.validators import URLValidator
 
 class MusicTrack(models.Model):
     title = models.CharField(max_length=200)
@@ -10,8 +11,12 @@ class MusicTrack(models.Model):
     genre = models.CharField(max_length=50)
     release_year = models.PositiveIntegerField()
     duration_seconds = models.PositiveIntegerField(blank=False, default=0)
-    cover_image = models.ImageField(upload_to='music_covers/', null=True, blank=True)
-    audio_file = models.FileField(upload_to='music_tracks/')
+    cover_image_url = models.URLField(
+        validators=[URLValidator()],  # Валидатор для проверки корректности URL
+        null=True,  # Разрешить NULL значения
+        blank=True   # Разрешить пустые значения
+    )
+    audio_file = models.URLField()
 
     def __str__(self):
         return self.title
@@ -47,8 +52,6 @@ class UserManage(BaseUserManager):
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     activation_code = models.CharField(max_length=255, blank=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
     avatar = models.ImageField(upload_to='avatars', blank=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

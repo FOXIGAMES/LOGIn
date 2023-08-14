@@ -108,7 +108,7 @@ class RegistrationView(APIView):
         user = serializer.save()
         if user:
             try:
-                send_confirmation_email(user.email, 'http://127.0.0.1:8000/api/account/activate/?u='+str(user.activation_code))
+                send_confirmation_email(user.email, 'http://16.171.145.163/api/account/activate/?u='+str(user.activation_code))
             except:
                 return Response({'message': 'Зарегистрирован, но не смог отправить код активации',
                                  'data': serializer.data}, status=201)
