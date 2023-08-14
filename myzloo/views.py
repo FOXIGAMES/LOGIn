@@ -65,11 +65,11 @@ class CustomUserViewSet(viewsets.ModelViewSet):
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class CustomUserDetailView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+class CustomUserByUsernameView(APIView):
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        user = get_object_or_404(User, username=username)
 
-    def get(self, request, format=None):
-        user = request.user
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 

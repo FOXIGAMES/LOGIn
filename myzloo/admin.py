@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from myzloo.models import CustomUser, MusicTrack, myzloo_favorites
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('email', 'username', 'is_active', 'is_staff')
+    list_display = ('email', 'username', 'is_active', 'is_staff', 'is_private', 'is_premium')
     list_filter = ('is_active', 'is_staff')
     search_fields = ('email', 'username')
 

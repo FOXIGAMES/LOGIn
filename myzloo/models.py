@@ -37,16 +37,24 @@ class UserManage(BaseUserManager):
     def create_user(self, email, password, **kwargs):
         kwargs.setdefault('is_staff', False)
         kwargs.setdefault('is_superuser', False)
+        kwargs.setdefault('is_private', False)
+        kwargs.setdefault('is_premium', False)
         return self._create_user(email, password, **kwargs)
 
     def create_superuser(self, email, password, **kwargs):
         kwargs.setdefault('is_staff', True)
         kwargs.setdefault('is_superuser', True)
         kwargs.setdefault('is_active', True)
+        kwargs.setdefault('is_private', True)
+        kwargs.setdefault('is_premium', True)
         if kwargs.get('is_staff') is not True:
             raise ValueError('У супер юзера должно быть поле is_staff=True')
         if kwargs.get('is_superuser') is not True:
             raise ValueError('У супер юзера должно быть поле is_superuser=True')
+        if kwargs.get('is_private') is not True:
+            raise ValueError('У супер юзера должно быть поле is_private=True')
+        if kwargs.get('is_premium') is not True:
+            raise ValueError('У супер юзера должно быть поле is_premium=True')
         return self._create_user(email, password, **kwargs)
 
 class CustomUser(AbstractUser):
@@ -55,6 +63,8 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(upload_to='avatars', blank=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_private = models.BooleanField(default=False)
+    is_premium = models.BooleanField(default=False)
     objects = UserManage()
     favorites = models.ManyToManyField(MusicTrack, through='myzloo_favorites', related_name='users_favorite')
 
