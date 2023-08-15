@@ -27,7 +27,7 @@ User = get_user_model()
 
 
 class StandartResultPagination(PageNumberPagination):
-    page_size = 4
+    page_size = 24
     page_query_param = 'page'
 
 class GenreAPIView(viewsets.ModelViewSet):
@@ -158,6 +158,9 @@ class ActivationView(APIView):
 class LoginView(TokenObtainPairView):
     permission_classes = [permissions.AllowAny]
 
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        return response
 
 class LogoutView(APIView):
     permission_classes = permissions.IsAuthenticated,

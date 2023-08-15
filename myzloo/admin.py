@@ -20,3 +20,4 @@ class MyzlooFavoritesAdmin(admin.ModelAdmin):
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MusicTrack, MusicTrackAdmin)
 admin.site.register(myzloo_favorites, MyzlooFavoritesAdmin)
+admin.site.register(Genre)
