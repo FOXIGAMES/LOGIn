@@ -88,7 +88,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'username', 'is_active', 'is_staff', 'is_private', 'is_premium', 'date_joined', 'favorites')
+        fields = ('id', 'email', 'username', 'avatar', 'is_active', 'is_staff', 'is_private', 'is_premium', 'date_joined', 'favorites')
 
     def get_favorites(self, obj):
         return list(obj.favorites_tracks.values_list('track', flat=True))
