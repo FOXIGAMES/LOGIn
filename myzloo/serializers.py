@@ -1,7 +1,7 @@
 from django.db.models import Avg
 
 from impressions.serializers import CommentListSerializer, LikedUserSerializer
-from .models import MusicTrack, myzloo_favorites
+from .models import MusicTrack, myzloo_favorites, Genre
 from .models import CustomUser
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -53,11 +53,35 @@ class ActivationSerializer(serializers.Serializer):
         except User.DoesNotExist:
             raise serializers.ValidationError('Неверный код')
 
+
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = ('genre',)
+
 class MusicTrackSerializer(serializers.ModelSerializer):
     class Meta:
         model = MusicTrack
         fields = '__all__'
 
+
+class FilterTrackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MusicTrack
+        fields = '__all__'
+class FilterTrackByGenreSerializer(serializers.ModelSerializer):
+    # genre = GenreSerializer()
+    genre_name = serializers.StringRelatedField(source='genre.genre', read_only=True)
+    class Meta:
+        model = MusicTrack
+        fields ='__all__'
+
+class SearchTrackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MusicTrack
+
+    def get_favorites(self, obj):
+        return list(obj.favorite_tracks.values_list('track_id', flat=True))
 
 class CustomUserSerializer(serializers.ModelSerializer):
     favorites = serializers.SerializerMethodField()

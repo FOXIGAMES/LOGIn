@@ -2,10 +2,10 @@ from django.http import HttpResponse, Http404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from .models import CustomUser, myzloo_favorites
+from .models import CustomUser, myzloo_favorites, Genre
 from rest_framework import generics, status, permissions
 from .models import MusicTrack
-from .serializers import MusicTrackSerializer
+from .serializers import MusicTrackSerializer, GenreSerializer, FilterTrackSerializer, FilterTrackByGenreSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import RegisterSerializer, CustomUserSerializer
 from .send_email import send_confirmation_email
@@ -19,7 +19,27 @@ from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
+from django_filters import rest_framework as filters
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import request
+
 User = get_user_model()
+
+
+class StandartResultPagination(PageNumberPagination):
+    page_size = 4
+    page_query_param = 'page'
+
+class GenreAPIView(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'DELETE':
+            return (permissions.IsAuthorOrAdmin(),)
+        elif self.request.method in ['PUT', 'PATCH']:
+            return (permissions.IsAuthorOrAdmin(),)
+        return (permissions.AllowAny(),)
 
 class MusicTrackListCreateView(generics.ListCreateAPIView):
     queryset = MusicTrack.objects.all()
@@ -152,6 +172,41 @@ class LogoutView(APIView):
         except:
             return Response('Smth went wrong', status=400)
 
+class FilterByArtistViewSet(viewsets.ModelViewSet):
+    queryset = MusicTrack.objects.all()
+    serializer_class = FilterTrackSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        artist_filter = self.request.query_params.get('artist')
+        if artist_filter:
+            queryset = queryset.filter(artist__icontains=artist_filter)
+        return queryset
+
+
+class FilterByGenreViewSet(viewsets.ModelViewSet):
+    queryset = MusicTrack.objects.all()
+    serializer_class = FilterTrackByGenreSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        genre_filter = self.request.query_params.get('genre')
+        if genre_filter:
+            queryset = queryset.filter(genre__genre__iexact=genre_filter)
+        return queryset
+
+
+class SearchByTitleViewSet(viewsets.ModelViewSet):
+    queryset = MusicTrack.objects.all()
+    serializer_class = FilterTrackSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        title_search = self.request.query_params.get('title')
+        print("Title search:", title_search)
+        if title_search:
+            queryset = queryset.filter(title__icontains=title_search)
+        return queryset
 
 def send_daily_notification_to_users():
     users = User.objects.filter(is_active=True)

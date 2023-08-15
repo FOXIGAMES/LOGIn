@@ -3,12 +3,25 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.core.validators import URLValidator
+from django_filters import rest_framework as filters
+
+
+class Genre(models.Model):
+    genre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.genre
+
+    class Meta:
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанры'
 
 class MusicTrack(models.Model):
     title = models.CharField(max_length=200)
     artist = models.CharField(max_length=100)
     album = models.CharField(max_length=100)
-    genre = models.CharField(max_length=50)
+    # genre = models.CharField(max_length=50)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     release_year = models.PositiveIntegerField()
     duration_seconds = models.PositiveIntegerField(blank=False, default=0)
     cover_image_url = models.URLField(
@@ -79,3 +92,15 @@ class myzloo_favorites(models.Model):
 
     class Meta:
         unique_together = ('user', 'track')
+
+
+class ModelFilter(filters.FilterSet):
+    # artist = filters.CharFilter(lookup_expr='icontains')
+    class Meta:
+        model = MusicTrack
+        fields = ['artist']
+class ModelSearch(filters.FilterSet):
+    attribute = filters.CharFilter(lookup_expr='icontains')
+    class Meta:
+        model = MusicTrack
+        fields = ['attribute']

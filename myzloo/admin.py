@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from myzloo.models import CustomUser, MusicTrack, myzloo_favorites
+from myzloo.models import CustomUser, MusicTrack, myzloo_favorites, Genre
 
 class CustomUserAdmin(UserAdmin):
     list_display = ('email', 'username', 'is_active', 'is_staff', 'is_private', 'is_premium')
